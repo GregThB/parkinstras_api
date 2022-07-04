@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dropColumn('name');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('civility');
+            $table->string('civility')->nullable();
             $table->softDeletes();
         });
     }
