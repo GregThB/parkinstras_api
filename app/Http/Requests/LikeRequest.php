@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class LikeRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class LikeRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user() != null;
+        return $this->user() != null && $this->user()->email_verified_at != null || Gate::allows('is-manager');
     }
 
     /**

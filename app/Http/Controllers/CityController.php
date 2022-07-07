@@ -23,14 +23,19 @@ class CityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\CityRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(CityRequest $request)
-    {
-        if(!$city = City::create($request->all())) {
+    {   
+        if($data = $request->validated()) {
+            return response()->json();
+        }
+        
+        if(!$city = City::create($data)) {
             return response()->json(['error' => 'Une erreur est survenue lors de la création de la ville.'], 500);
         }
+     
         return response()->json($city, 201);
     }
 
