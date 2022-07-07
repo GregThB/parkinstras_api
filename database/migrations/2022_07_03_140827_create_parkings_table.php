@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('full_time');
             $table->text('schedules')->nullable();
             $table->text('prices')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
 
             $table->foreign('id_city')->references('id')->on('cities')

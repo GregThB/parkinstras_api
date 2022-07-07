@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
+
+// use Illuminate\Support\Facades\Gate;
 
 class CityRequest extends FormRequest
 {
@@ -14,7 +15,8 @@ class CityRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('is-manager');
+        // return Gate::allows('is-manager');
+        return true;
     }
 
     /**
@@ -26,7 +28,7 @@ class CityRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'zipcode' => 'required|integer|digits:5'
+            'zipcode' => 'required|integer|digits:5|unique:cities,zipcode'
         ];
     }
 }

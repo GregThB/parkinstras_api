@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('zipcode');
             $table->timestamps();
+
+            $table->unique(['name', 'zipcode']);
         });
     }
 

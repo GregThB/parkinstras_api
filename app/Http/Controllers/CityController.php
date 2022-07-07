@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CityRequest;
 use App\Models\City;
-use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
@@ -14,7 +14,10 @@ class CityController extends Controller
      */
     public function index()
     {
-        return response()->json(City::all());
+        if (!$cities = City::all()) {
+            return response()->json(['error' => 'Une erreur est survenue lors du chargement des villes.'], 404);
+        }
+        return response()->json($cities);
     }
 
     /**
@@ -23,9 +26,11 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CityRequest $request)
     {
-        $city = City::create($request->all());
+        if(!$city = City::create($request->all())) {
+            return response()->json(['error' => 'Une erreur est survenue lors de la création de la ville.'], 500);
+        }
         return response()->json($city, 201);
     }
 
@@ -37,30 +42,34 @@ class CityController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if (!$city = City::find($id)) {
+            return response()->json(['error' => 'Une erreur est survenue lors du chargement de la ville.'], 404);
+        }
+        return response()->json($city);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\CityRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CityRequest $request, $id)
     {
-        //
+        if (!$city = City::find($id)) {
+            return response()->json(['error' => 'Une erreur est survenue lors du chargement de la ville.'], 404);
+        }
+
+        if($data = $request->validated()) {
+            return response()->json();
+        }
+    
+        if(!$city->update($data)) {
+            return response()->json(['error' => 'Une erreur est survenue lors de la modification de la ville.'], 500);
+        }
+
+        return response()->json($city, 200);
     }
 
     /**
@@ -71,6 +80,9 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!City::destroy($id)) {
+            return response()->json(['error' => 'Une erreur est survenue lors de la suppression de la ville.'], 500);
+        }
+        return response()->json(null, 204);
     }
 }
