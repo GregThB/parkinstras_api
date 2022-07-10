@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreignId('parking_id')->nullable();
             $table->timestamps();
 
+            $table->unique(['user_id', 'parking_id']);
+
             $table->foreign('user_id')->references('id')->on('users')
             ->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreign('parking_id')->references('id')->on('parkings')

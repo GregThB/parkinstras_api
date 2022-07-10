@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('idsurfs');
+            $table->string('idsurfs')->unique();
             $table->foreignId('id_city')->nullable();
             $table->string('street');
             $table->string('lat');

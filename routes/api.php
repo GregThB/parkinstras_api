@@ -25,4 +25,7 @@ Route::middleware(JsonResponseMiddleware::class)->group(function () {
     Route::resource('/likes', LikeController::class)->except('create', 'show', 'edit');
     Route::resource('/owners', OwnerController::class)->except('create', 'edit');
     Route::resource('/roles', RoleController::class)->except('create', 'edit');
+    Route::resource('/rates', RateController::class)->except('create', 'edit');
+    Route::resource('/users', UserController::class)->except('create', 'edit');
+    Route::resource('parking_images', ParkingImageController::class)->except('create', 'edit');
 });
