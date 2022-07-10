@@ -28,11 +28,7 @@ class LikeController extends Controller
      */
     public function store(LikeRequest $request)
     {
-        if($data = $request->validated()) {
-            return response()->json();
-        }
-
-        if(!$like = Like::create($data)) {
+        if(!$like = Like::create($request->validated())) {
             return response()->json(['error' => 'Une erreur est survenue lors de la création du like.'], 500);
         }
 
@@ -47,9 +43,7 @@ class LikeController extends Controller
      */
     public function update(LikeRequest $request)
     {
-        if($data = $request->validated()) {
-            return response()->json();
-        }
+        $data = $request->validated();
 
         if(Like::where('id_user', $data['id_user'])->where('id_parking', $data['id_parking'])->first()) {
             return $this->store($data);
@@ -72,6 +66,6 @@ class LikeController extends Controller
             return response()->json(['error' => 'Une erreur est survenue lors de la suppression du like.'], 500);
         }
 
-        return response()->json(['success' => 'Le like a été supprimé avec succès.'], 200);
+        return response()->json(null, 204);
     }
 }

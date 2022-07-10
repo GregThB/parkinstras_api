@@ -27,12 +27,8 @@ class CityController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(CityRequest $request)
-    {   
-        if($data = $request->validated()) {
-            return response()->json();
-        }
-        
-        if(!$city = City::create($data)) {
+    {           
+        if(!$city = City::create($request->validated())) {
             return response()->json(['error' => 'Une erreur est survenue lors de la création de la ville.'], 500);
         }
      
@@ -65,16 +61,12 @@ class CityController extends Controller
         if (!$city = City::find($id)) {
             return response()->json(['error' => 'Une erreur est survenue lors du chargement de la ville.'], 404);
         }
-
-        if($data = $request->validated()) {
-            return response()->json();
-        }
     
-        if(!$city->update($data)) {
+        if(!$city->update($request->validated())) {
             return response()->json(['error' => 'Une erreur est survenue lors de la modification de la ville.'], 500);
         }
 
-        return response()->json($city, 200);
+        return response()->json($city);
     }
 
     /**
