@@ -16,10 +16,8 @@ return new class extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('zipcode');
+            $table->string('zipcode')->unique();
             $table->timestamps();
-
-            $table->unique(['name', 'zipcode']);
         });
     }
 
