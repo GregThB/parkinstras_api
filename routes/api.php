@@ -24,4 +24,5 @@ Route::middleware(JsonResponseMiddleware::class)->group(function () {
     Route::resource('/cities', CityController::class)->except('create', 'edit');
     Route::resource('/likes', LikeController::class)->except('create', 'show', 'edit');
     Route::resource('/owners', OwnerController::class)->except('create', 'edit');
+    Route::resource('/roles', RoleController::class)->except('create', 'edit');
 });
