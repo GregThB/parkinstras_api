@@ -1,8 +1,15 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\ParkingController;
+use App\Http\Controllers\ParkingImageController;
+use App\Http\Controllers\RateController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\JsonResponseMiddleware;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +23,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware(JsonResponseMiddleware::class)->group(function () {
+
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
+
+
     Route::resource('/cities', CityController::class)->except('create', 'edit');
     Route::resource('/likes', LikeController::class)->except('create', 'show', 'edit');
     Route::resource('/owners', OwnerController::class)->except('create', 'edit');

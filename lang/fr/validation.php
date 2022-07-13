@@ -158,6 +158,12 @@ return [
     'attributes' => [
         'zipcode' => 'code postal',
         'city' => 'ville',
+        'firstname' => 'prénom',
+        'lastname' => 'nom',
+        'password' => 'mot de passe',
+        'phone' => 'téléphone',
+        'address' => 'adresse',
+        'country' => 'pays',
     ],
 
 ];
